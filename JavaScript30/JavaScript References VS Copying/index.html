@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JS Reference VS Copy</title>
+</head>
+<body>
+
+  <script>
+    // 문자열, 숫자, boolean은 복사한 후 값을 바꿔도 원래 값에 영향을 주지 않는다
+    console.log('👉 숫자와 문자열');
+    let age = 100; 
+    let age2 = age;
+    console.log(age, age2);
+    age = 200;
+    console.log(age, age2);
+
+    let name = 'Amy';
+    let name2 = name;
+    console.log(name, name2);
+    name = 'May';
+    console.log(name, name2);
+
+    // Arrray 비교
+    console.log('👉 Array');
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
+    const team = players;
+    console.log(players, team);
+
+    // 복사한 배열의 값을 바꾸면 원래 배열의 값도 바뀐다. 배열을 복사한 것이 아니라 배열을 참조한 것이기 때문에
+    team[3] = 'Lux';
+    console.log(players, team);
+
+    // 배열 복사하기
+    const team2 = players.slice();
+    team2[1] = "Johnson";
+    console.log(players, team2);
+    
+    // 새 배열을 만들고 이전 배열 연결하기(concat)
+    const team3 = [].concat(players);
+    team3[2] = 'Alison';
+    console.log(players, team3);
+
+    // ES6 Spread 사용
+    const team4 = [...players];
+    team4[0] = 'Rose';
+    console.log(players, team4);
+
+    // Array.from 이용해서 얕은 복사
+    const team5 = Array.from(players);
+    team5[3] = 'Max';
+    console.log(players,  team5);
+
+    // Objects
+    console.log('👉 Object');
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    // object 역시 복사가 아닌 참조
+    const captain = person;
+    console.log(person, captain);
+    captain.number = 99;
+
+    // Object.assign 이용해서 복사
+    const cap2 = Object.assign({}, person, { number : 99, age : 24});
+    console.log(person, cap2);
+
+    // Spread
+    const cap3 = {...person};
+    cap3.age = 19;
+    console.log(person, cap3);
+
+    // lodash는 cloneDeep 메소드가 있는데 주의해서 사용해야한다
+    const wes = {
+        name : 'Wes',
+        age: 100,
+        social: {
+            twitter: '@wesbos',
+            facebook: 'wesbos'
+        }
+    }
+    
+    console.log(wes);
+
+    const dev = Object.assign({}, wes);
+    console.log(dev);
+
+    dev.social.twitter = "@cool";
+    console.log(dev, wes);
+
+    const dev2 = JSON.parse(JSON.stringify(wes));
+    dev2.social.twitter = "@wesbos";
+    console.log(dev2, wes);
+  </script>
+
+</body>
+</html>
